@@ -1,0 +1,481 @@
+#include <iostream>
+#include <algorithm>  
+#include <string>  
+#include <cctype>
+using namespace std;
+
+string uppercase (const string& sentence)
+{
+  int i;
+  string temp(sentence);
+ 
+  for( i=0; i<sentence.length();i++)
+      if(i==0)
+        {
+           temp[0]=toupper(sentence[0]);
+        }
+
+
+      else if (temp[i]==isspace(i))
+      {
+        toupper(sentence[i+1]);
+      }
+      
+else
+  temp[i]=towlower(sentence[i]);
+  return temp;
+
+}
+
+int main ()
+{
+  string sentence;
+cout<<"enter your sentance ";
+getline(cin, sentence);
+
+
+// Define a function to correct the spacing and capitalization of a sentence
+void correct_sentence(string& sentence) ;{
+  // Remove any leading or trailing whitespaces
+  sentence.erase(0, sentence.find_first_not_of(' '));
+  sentence.erase(sentence.find_last_not_of(' ') + 1);
+  // Replace any multiple whitespaces with a single one
+  for (int i = 0; i < sentence.length() - 1; i++) {
+    if (sentence[i] == ' ' && sentence[i + 1] == ' ') {
+      sentence.erase(i, 1);
+      i--;
+    }
+  }
+}
+sentence =uppercase(sentence);
+cout<<"the correct ya bro is " <<sentence;
+}
+////////Number 2
+
+
+#include <iostream>
+#include <string>
+#include <sstream>
+
+// Function to check if a character is a punctuation letter
+
+
+bool isPunctuation(char c)
+
+{
+    return c == ' ' || c == '.' || c == ',' || c == '?' || c == '!' || c == ':' || c == ';' || c == '"';
+}
+
+int main()
+ {
+    std::
+ string sentence;
+    std::
+ cout << "Enter a sentence: ";
+    //std::
+ getline(std::cin, sentence);
+
+    std::
+ istringstream iss(sentence);
+    std::
+ string word;
+    std::
+ string result;
+
+    while (iss >> word)
+
+ {
+        if (word == "he" || word == "He") {
+
+
+
+      // Check if "he" is a whole word by examining the surrounding characters
+            bool isWholeWord = true;
+
+            if (iss.eof() || isPunctuation(iss.peek()))
+
+   {
+                isWholeWord = true;
+            }
+
+    else if (isalpha(iss.peek()))
+
+    {
+                isWholeWord = false;
+            }
+
+            if (isWholeWord)
+
+   {
+                result += "he or she ";
+            }
+
+   else
+
+    {
+                result += word + " ";
+            }
+        }
+
+  else
+
+   {
+            result += word + " ";
+        }
+    }
+
+    std::
+ cout << "Output: " << result;
+
+    return 0;
+}
+#include <iostream>
+#include <vector>
+#include <sstream>
+
+std::vector<std::string> split(std::string target, std::string delimiter) {
+    std::vector<std::string> result;
+    size_t pos = 0;
+    while ((pos = target.find(delimiter)) != std::string::npos) {
+        std::string token = target.substr(0, pos);
+        result.push_back(token);
+        target.erase(0, pos + delimiter.length());
+    }
+    result.push_back(target);  // Add the last token after the last delimiter
+    return result;
+}
+
+int main() {
+    std::vector<std::string> result1 = split("10,20,30", ",");
+    std::vector<std::string> result2 = split("do re mi fa so la ti do", " ");
+
+    std::cout << "Result 1:";
+    for (const auto &str : result1) {
+        std::cout << " " << str;
+    }
+    std::cout << std::endl;
+
+    std::cout << "Result 2:";
+    for (const auto &str : result2) {
+        std::cout << " " << str;
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+////Number 5
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+struct Player
+ {
+
+ string name;
+    int score;
+};
+
+
+
+vector<Player> playerList;
+
+void addPlayer(const std::string& name, int score)
+
+ {
+    Player player = {name, score};
+    playerList.push_back(player);
+
+
+
+ sort(playerList.begin(), playerList.end(), [](const Player& a, const Player& b)
+
+ {
+        return a.score > b.score;
+    });
+
+
+
+ if (playerList.size() > 10)
+
+  {
+        playerList.pop_back();
+    }
+}
+
+void printTopPlayers()
+
+ {
+    cout << "Top 10 Players and Scores:\n";
+    for (const Player& player : playerList)
+
+ {
+
+  cout << player.name << " " << player.score << "\n";
+    }
+}
+
+int findPlayerScore(const string& name)
+
+ {
+    for (const Player& player : playerList)
+
+  {
+        if (player.name == name)
+
+  {
+            return player.score;
+        }
+    }
+    return -1;
+}
+
+int main()
+
+ {
+    int choice;
+
+ while (true)
+
+ {
+
+  cout << "Menu:\n";
+  cout << "1. Add a new player and score\n";
+  cout << "2. Print top 10 players and scores\n";
+  cout << "3. Find a player's highest score\n";
+  cout << "4. Exit\n";
+  cin >> choice;
+
+        if (choice == 1)
+
+   {
+            std::string name;
+            int score;
+   cout << "Enter player name: ";
+   cin >> name;
+
+   cout << "Enter player score: ";
+   cin >> score;
+
+      addPlayer(name, score);
+        }
+
+   else
+
+    if (choice == 2) {
+            printTopPlayers();
+        }
+
+
+   else
+
+    if (choice == 3) {
+
+   std::string name;
+
+   cout << "Enter player name: ";
+
+   cin >> name;
+
+
+   int playerScore = findPlayerScore(name);
+            if (playerScore != -1)
+
+   {
+                cout << name << "'s highest score: " << playerScore << "\n";
+            }
+
+
+   else
+
+    {
+                cout << name << " is not in the top 10 list or hasn't been input.\n";
+            }
+        }
+
+  else
+
+  if (choice == 4)
+
+  {
+            break;
+        }
+
+   else
+
+  {
+        cout << "Invalid choice. Please enter a valid option.\n";
+        }
+    }
+
+    return 0;
+};
+public class BinaryPrinter {
+    public static void binaryPrint(int n) {
+        if (n == 0) {
+            System.out.print(0);
+            return;
+        }
+        binaryPrintHelper(n);
+    }
+
+    private static void binaryPrintHelper(int n) {
+        if (n > 0) {
+            binaryPrintHelper(n / 2);
+            System.out.print(n % 2);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = {0, 4, 27};
+        for (int n : numbers) {
+            System.out.print("Binary representation of " + n + ": ");
+            binaryPrint(n);
+            System.out.println();
+        }
+    }
+}
+/////Number 8
+
+#include <iostream>
+
+using namespace std;
+
+void pattern(int n, int i)
+
+ {
+    if (n == 1)
+
+ {
+        for (int j = 0; j < i; j++)
+
+
+   {
+            cout << " ";
+        }
+
+  cout << "*\n";
+    }
+
+ else
+
+  {
+        int m = n / 2;
+        pattern(m, i);
+
+  for (int j = 0; j < i; j++)
+
+  {
+            cout << " ";
+        }
+
+  for (int j = 0; j < n; j++)
+
+   {
+         cout << "*";
+        }
+
+  cout << "\n";
+        pattern(m, i);
+    }
+}
+
+int main()
+
+{
+    pattern(8, 0);
+    return 0;
+}
+public class TeddyBearGame {
+    public static boolean bears(int n) {
+        if (n == 42) {
+            return true; // Base case: If the number of bears is 42, the game is won.
+        }
+        if (n < 42) {
+            return false; // Base case: If the number of bears is less than 42, the game cannot be won.
+        }
+
+        // Check the three possible moves and recursively call the function for each valid move.
+        if (n % 2 == 0 && bears(n / 2)) {
+            return true;
+        }
+        if ((n % 3 == 0 || n % 4 == 0) && bears(n - ((n % 10) * ((n % 100) / 10)))) {
+            return true;
+        }
+        if (n % 5 == 0 && bears(n - 42)) {
+            return true;
+        }
+
+        return false; // If no valid move leads to winning the game, return false.
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        System.out.println(bears(250)); // Output: true
+        System.out.println(bears(42));  // Output: true
+        System.out.println(bears(84));  // Output: true
+        System.out.println(bears(53));  // Output: false
+        System.out.println(bears(41));  // Output: false
+    }
+}def read_file(file_name):
+    try:
+        with open(file_name, 'r') as file:
+            content = file.read()
+            return content
+    except FileNotFoundError:
+        print(f"File '{file_name}' not found.")
+        return None
+
+def compare_char_by_char(file1_content, file2_content):
+    lines1 = file1_content.splitlines()
+    lines2 = file2_content.splitlines()
+
+    for line_num, (line1, line2) in enumerate(zip(lines1, lines2), start=1):
+        if line1 != line2:
+            return line_num, line1, line2
+
+    if len(lines1) != len(lines2):
+        return len(lines1) + 1, None, None
+
+    return 0, None, None
+
+def compare_word_by_word(file1_content, file2_content):
+    words1 = file1_content.split()
+    words2 = file2_content.split()
+
+    for word_num, (word1, word2) in enumerate(zip(words1, words2), start=1):
+        if word1 != word2:
+            return word_num, word1, word2
+
+    if len(words1) != len(words2):
+        return len(words1) + 1, None, None
+
+    return 0, None, None
+
+def main():
+    file1_name = input("Enter the name of the first file: ")
+    file2_name = input("Enter the name of the second file: ")
+
+    file1_content = read_file(file1_name)
+    file2_content = read_file(file2_name)
+
+    if file1_content is not None and file2_content is not None:
+        comparison_type = input("Enter 'c' for character by character comparison or 'w' for word by word comparison: ")
+
+        if comparison_type.lower() == 'c':
+            line_num, line1, line2 = compare_char_by_char(file1_content, file2_content)
+            if line_num == 0:
+                print("Files are identical.")
+            else:
+                print(f"Files differ at line {line_num}:\nFile 1: {line1}\nFile 2: {line2}")
+        elif comparison_type.lower() == 'w':
+            word_num, word1, word2 = compare_word_by_word(file1_content, file2_content)
+            if word_num == 0:
+                print("Files are identical.")
+            else:
+                print(f"Files differ at word {word_num}:\nFile 1: {word1}\nFile 2: {word2}")
+        else:
+            print("Invalid comparison type. Please enter 'c' or 'w'.")
+
+if _name_ == "_main_":
+    main()
