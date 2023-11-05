@@ -479,3 +479,42 @@ def main():
 
 if _name_ == "_main_":
     main()
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    map<string, int> keywords;
+    vector<string> keywordList = {"bank", "credit card", "password", "account", "verify", "urgent", "important", "security", "suspicious", "unauthorized", "limited time", "limited offer", "free", "win", "winner", "congratulations", "prize", "lottery", "inheritance", "investment", "refund", "IRS", "government", "FBI", "CIA", "Nigerian prince", "Western Union", "PayPal", "Amazon", "eBay", "Apple"};
+    vector<int> points = {2, 3, 3, 2, 2, 1, 1, 2, 2, 3, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+    for (int i = 0; i < keywordList.size(); i++) {
+        keywords[keywordList[i]] = points[i];
+    }
+    string filename;
+    cout << "Enter the name of the text file: ";
+    cin >> filename;
+    ifstream file(filename);
+    string line;
+    map<string, int> keywordCount;
+    int totalPoints = 0;
+    while (getline(file, line)) {
+        for (auto const& keyword : keywordList) {
+            if (line.find(keyword) != string::npos) {
+                keywordCount[keyword]++;
+                totalPoints += keywords[keyword];
+            }
+        }
+    }
+    cout << "Keyword\t\tOccurrences\tPoints" << endl;
+    for (auto const& keyword : keywordList) {
+        if (keywordCount[keyword] > 0) {
+            cout << keyword << "\t\t" << keywordCount[keyword] << "\t\t" << keywords[keyword] << endl;
+        }
+    }
+    cout << "Total points: " << totalPoints << endl;
+    return 0;
+}
